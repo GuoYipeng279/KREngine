@@ -1,7 +1,11 @@
 from block import Block
+from entity import Entity
 
 
-class Thing:
+class Thing(Entity):
+    '''
+    Objects among entitys, they have clear coordinates in the game world.
+    '''
     counter = 0
     objects = dict()
 

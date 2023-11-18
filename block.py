@@ -1,4 +1,6 @@
 from enum import IntEnum
+from region import Region
+
 
 class Terrain(IntEnum):
     DEFAULT = 0
@@ -10,7 +12,10 @@ class Terrain(IntEnum):
 class Block:
     pass
 
-class Block:
+class Block(Region):
+    '''
+    Blocks are game entity, but not an object, they belong to game system, not game world
+    '''
     counter = 0
     graphics = [' ','?','w','.','#']
     adj = [(1,0),(0,1),(-1,0),(0,-1)]
@@ -19,6 +24,19 @@ class Block:
     def __init__(self,x=0,y=0,terrain=Terrain.UNKNOWN,altitude=0):
         # print('Init Block:',(x,y))
         self.x, self.y = x,y
+        depth = Region.max_depth
+        par:Region = None
+        while depth > 0:
+            xx,yy = x>>depth, y>>depth
+            lr, ud = xx&1, yy&1
+            if (xx,yy,depth) not in Region.regions:
+                index = lr<<1+ud
+                Region.regions[(xx,yy,depth)] = Region(par, depth, index)
+                if par: par.chi[index] = Region.regions[(xx,yy,depth)]
+            par = Region.regions[(xx,yy,depth)]
+        lr, ud = x&1, y&1
+        index = lr<<1+ud
+        par.chi[index] = self
         # self.sign = hash(x)+hash(y)
         self.lies = None
         self.terrain = terrain

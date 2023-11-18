@@ -34,6 +34,9 @@ class Hand(Body):
         if self.state != BodyState.HEALTHY: return
 
 class Character(Thing):
+    '''
+    Actual characters bodies
+    '''
     def __init__(self, hp: int=1, weight: int=1, invincible: bool=False, position: Block=None) -> None:
         super().__init__(hp, weight, invincible, True, position)
         self.memory = []
@@ -76,7 +79,7 @@ class Character(Thing):
 
     def talk(self, sth):
         pass
-    
+
     def observe(self, event:Event):
         pass
 
