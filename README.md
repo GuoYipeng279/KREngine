@@ -9,3 +9,4 @@ Boundary of Knowledge: geography boundary of known area + known chars' unknown p
 
 Known area: area insight + area have players influences. 
 
+2023.11.18: Add region concept

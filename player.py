@@ -3,8 +3,8 @@ from character import Character
 
 
 class Player:
-    directions = {'D':0,'W':1,'A':2,'S':3}
-    views = {'L':0,'I':1,'J':2,'K':3}
+    directions = {'D':0,'S':1,'A':2,'W':3}
+    views = {'L':0,'K':1,'J':2,'I':3}
     players = []
 
     def __init__(self, character:Character) -> None:

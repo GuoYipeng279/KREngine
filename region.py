@@ -16,4 +16,6 @@ class Region(Entity):
         self.level = level
         self.at = at
         self.chi = [None]*4
+        self.randomness = 2**level
+        print(len(Region.regions)+1)
 

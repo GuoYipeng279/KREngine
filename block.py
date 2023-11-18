@@ -30,13 +30,16 @@ class Block(Region):
             xx,yy = x>>depth, y>>depth
             lr, ud = xx&1, yy&1
             if (xx,yy,depth) not in Region.regions:
-                index = lr<<1+ud
+                index = (lr<<1)+ud
                 Region.regions[(xx,yy,depth)] = Region(par, depth, index)
                 if par: par.chi[index] = Region.regions[(xx,yy,depth)]
             par = Region.regions[(xx,yy,depth)]
+            depth -= 1
         lr, ud = x&1, y&1
-        index = lr<<1+ud
+        index = (lr<<1)+ud
+        super().__init__(par, 0, index)
         par.chi[index] = self
+
         # self.sign = hash(x)+hash(y)
         self.lies = None
         self.terrain = terrain
