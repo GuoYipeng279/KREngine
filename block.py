@@ -1,4 +1,6 @@
 from enum import IntEnum
+from typing import List
+from entity import Entity
 from region import Region
 
 
@@ -12,7 +14,7 @@ class Terrain(IntEnum):
 class Block:
     pass
 
-class Block(Region):
+class Block(Entity):
     '''
     Blocks are game entity, but not an object, they belong to game system, not game world
     '''
@@ -24,27 +26,14 @@ class Block(Region):
     def __init__(self,x=0,y=0,terrain=Terrain.UNKNOWN,altitude=0):
         # print('Init Block:',(x,y))
         self.x, self.y = x,y
-        depth = Region.max_depth
-        par:Region = None
-        while depth > 0:
-            xx,yy = x>>depth, y>>depth
-            lr, ud = xx&1, yy&1
-            if (xx,yy,depth) not in Region.regions:
-                index = (lr<<1)+ud
-                Region.regions[(xx,yy,depth)] = Region(par, depth, index)
-                if par: par.chi[index] = Region.regions[(xx,yy,depth)]
-            par = Region.regions[(xx,yy,depth)]
-            depth -= 1
-        lr, ud = x&1, y&1
-        index = (lr<<1)+ud
-        super().__init__(par, 0, index)
-        par.chi[index] = self
-
+        self.getRegion
+        if self.getRegion.randomness < 0: raise NotImplementedError
+        # print(x,y,self.getRegion.randomness)
         # self.sign = hash(x)+hash(y)
         self.lies = None
         self.terrain = terrain
         self.altitude = altitude
-        self.adjacent:list[Block] = [None]*4 # 00 for right, 01 for up, 10 for left, 11 for down
+        self.adjacent:List[Block] = [None]*4 # 00 for right, 01 for up, 10 for left, 11 for down
         if self.position in Block.blocks: raise NotImplementedError
         Block.blocks[self.position] = self
         Block.counter += 1
@@ -64,6 +53,13 @@ class Block(Region):
         down = Block.getBlock(x,y-1,False)
         self.adjacent[3] = down
         if down: down.adjacent[1] = self
+
+    @property
+    def getRegion(self):
+        if self.position not in Region.regions[0]:
+            return Region(None, self.x, self.y,0)
+        else:
+            return Region.regions[0][self.position]
 
     def know(self):
         self.terrain = Terrain.LAND

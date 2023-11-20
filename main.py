@@ -11,3 +11,4 @@ if __name__ == '__main__':
         game.simulate()
         for player in game.players:
             player.render()
+        a = 1

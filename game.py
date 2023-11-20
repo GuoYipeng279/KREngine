@@ -1,3 +1,4 @@
+from typing import List
 from character import Character
 from player import Player
 
@@ -5,7 +6,7 @@ from player import Player
 class Game:
 
     def __init__(self) -> None:
-        self.players:list[Player] = []
+        self.players:List[Player] = []
         self.boundary_of_randomness = [] # on BOUND OF KNOWLEDGE, introduce randomness
         self.events = [] # set of facts in current frame.
 
