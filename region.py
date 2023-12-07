@@ -18,6 +18,7 @@ class Region(Entity):
     '''
     max_depth = 10
     regions:List[Dict[tuple, Region]] = [dict() for _ in range(max_depth+1)]
+    sparcity = 10
 
     def __init__(self, observe:Region, x:int, y:int, level:int) -> None:
         if level > Region.max_depth: raise NotImplementedError
@@ -28,7 +29,7 @@ class Region(Entity):
         self.level = level
         self.chi:List[Region] = [] # higher bit for x, lower bit for y
 
-        if level == Region.max_depth: self.randomness:int = 4**level # initial random particles in the top area.
+        if level == Region.max_depth: self.randomness:int = (4**level)//Region.sparcity # initial random particles in the top area.
         else: # find parent
             if (x>>1,y>>1) not in Region.regions[level+1]:
                 par = Region(self, x>>1, y>>1, level+1)

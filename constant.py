@@ -4,3 +4,4 @@ class Constant:
     Structure this raw only appear in game logical system.
     E.g. predicates, clauses. 
     '''
+    X='X'

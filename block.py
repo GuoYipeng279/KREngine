@@ -1,5 +1,6 @@
 from enum import IntEnum
 from typing import List
+from clause import Clause
 from entity import Entity
 from region import Region
 
@@ -54,6 +55,9 @@ class Block(Entity):
         self.adjacent[3] = down
         if down: down.adjacent[1] = self
 
+        self.rules = [*Clause.land]
+        self.states = []
+
     @property
     def getRegion(self):
         if self.position not in Region.regions[0]:
@@ -106,6 +110,7 @@ class Block(Entity):
 
     def __str__(self) -> str:
         if self.lies is None:
+            if self.getRegion.randomness > 0: return str(self.getRegion.randomness)
             return str(Block.graphics[self.terrain])
         else:
             return str(self.lies)

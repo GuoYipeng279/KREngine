@@ -20,6 +20,7 @@ class Thing(Entity):
         Thing.objects[self.id] = self
 
     def moveTo(self, block:Block):
+        if block.lies: return
         self.position.lies = None
         block.lies:Thing = self
         self.position = block

@@ -1,4 +1,5 @@
 from block import Block
+from clause import Clause
 from event import Event
 from object import Thing
 from enum import IntEnum
@@ -39,12 +40,19 @@ class Character(Thing):
     '''
     def __init__(self, hp: int=1, weight: int=1, invincible: bool=False, position: Block=None) -> None:
         super().__init__(hp, weight, invincible, True, position)
-        self.memory = []
-        self.knowledge = []
+        self.knowledge = [] # 此角色的认知
         self.facing = 0 # 0 right, 1 up, 2 left, 3 down
         self.alive = True
         self.sight = 10
         self._sighting = set()
+        self.home = None
+        self.stack = [] # workings in character's mind.
+        self.groups = [] # groups which character belongs. 
+        self.rules = [*Clause.instincts] # 此角色遵循的rules
+        self.cards_in_hand = []
+
+    def action(self, model:list):
+        pass
 
     def move(self, facing:int):
         if facing == self.facing:
